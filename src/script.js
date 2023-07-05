@@ -22,9 +22,10 @@ $(document).ready(function () {
     });
   });
 
-  $(".editCatatOncashier").click(function (e) {
+  $(".showpopupcatat").click(function (e) {
     e.preventDefault();
-    var CatatOnid = $("#catatOnid").text();
+    var CatatOnid = $(this).attr("Catataid");
+    // console.log(CatatOnid);
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -34,37 +35,63 @@ $(document).ready(function () {
       },
       dataType: "json",
       success: function (response) {
-        // $("#tampilCashOnModal").val(response.nominal);
-  
         $.each(response, function (key, value) {
           // console.log(value["nominal"]);
-          $("#editCashOncatat").val(value["nominal"]);
+          $("#editCashOncatat").val(value["nominal"]); // input popup
         });
         $("#showpopupcatat").modal("show");
       },
     });
   });
-  
-  $(".editCatatOnmines").click(function (e) {
+
+
+
+ 
+  $(".buttonrugi").click(function (e) {
     e.preventDefault();
-    var minesOnid = $("#catatOnid").text();
+    var CatatOnid = $(this).attr("RugiOnid");
+    console.log(CatatOnid);
     $.ajax({
       type: "POST",
       url: "koneksi.php",
       data: {
-        minesOnId: minesOnid,
-        update_mines: true,
+        minesId: CatatOnid,
+        update_rugi: true,
       },
       dataType: "json",
       success: function (response) {
-        // $("#tampilCashOnModal").val(response.nominal);
-
         $.each(response, function (key, value) {
-          // console.log(value["nominal"]);
-          $("#editCashOnmines").val(value["nominal"]);
+          console.log(value["nominal"]);
+          $("#editRugiOnModal").val(value["nominal"]);// input popup
         });
-        $("#editCashOnmines").modal("show");
+        $("#tampilrugiOnModal").modal("show");
       },
     });
   });
+ 
+  $(".buttonuang").click(function (e) {
+    e.preventDefault();
+    var Moneyid = $(this).attr("moneyOnid");
+    
+    $.ajax({
+      type: "POST",
+      url: "koneksi.php",
+      data: {
+        MoneyidId: Moneyid,
+        update_money: true,
+      },
+      dataType: "json",
+      success: function (response) {
+        $.each(response, function (key, value) {
+         
+          $("#editMoneyOnModal").val(value["nominal"]);// input popup
+        });
+        $("#tampilmoneyOnModal").modal("show");
+      },
+    });
+  });
+
+
+
+ 
 });
