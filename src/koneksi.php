@@ -2,9 +2,9 @@
 $koneksi = mysqli_connect("localhost","root","","Cashier");
 
 
-function queryJumlahTotal($queryJumlahTotal) {
+function JumlahTotal($JumlahTotal) {
    global $koneksi;
-   $result = mysqli_query($koneksi, $queryJumlahTotal);
+   $result = mysqli_query($koneksi, $JumlahTotal);
    $rows = [];
    while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
@@ -42,4 +42,22 @@ function moneyoncash($moneyoncash) {
 
 
 
+if (isset($_POST["update_cashier"])) {
+   $CashId = $_POST["cashId"];
+   $result_array = [];
+   $query = "SELECT * FROM `MoneyOncash` WHERE id='$CashId'";
+   $query_run = mysqli_query($koneksi, $query);
+
+   if (mysqli_num_rows($query_run) > 0) {
+      foreach ( $query_run as $row) {
+         array_push($result_array, $row);
+         header("content-type: application/json");
+         echo json_encode($result_array);
+
+      }
+   }
+}
+
+
+ 
 ?>
