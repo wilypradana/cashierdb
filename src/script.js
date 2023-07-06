@@ -1,26 +1,28 @@
 $(document).ready(function () {
-  $(".tampilCashOnModal").click(function (e) { // ambil dari button(bukan pop up)
-    e.preventDefault();
-    var CashOnid = $(this).attr("CashOnid"); // ambil dari class(bukan popup)
-    $.ajax({
-      type: "POST",
-      url: "koneksi.php",
-      data: {
-        cashId: CashOnid,
-        update_cashier: true,
-      },
-      dataType: "json",
-      success: function (response) {
-        $.each(response, function (key, value) {
-          // console.log(response);
-          $("#editCashOnModal").val(value["nominal"]); 
-          $("#input_id").val(value["id"]); 
-        });
-        $("#editCashOncashier").modal("show");
-      },
-    });
-  });
 
+
+  // done
+  $(".tampilCashOnModal").click(function (e) {
+    e.preventDefault();
+    var CashOnid = $(this).attr("CashOnid");
+    $.ajax({
+       type: "POST",
+       url: "koneksi.php",
+       data: {
+          cashId: CashOnid,
+          update_cashier: true,
+       },
+       dataType: "json",
+       success: function (response) {
+          $.each(response, function (key, value) {
+             $("#editCashOnModal").val(value["nominal"]);
+             $("#input_id").val(value["id"]);
+          });
+          $("#editCashOncashier").modal("show");
+       },
+    });
+ });
+ 
   $(".showpopupcatat").click(function (e) {
     e.preventDefault();
     var CatatOnid = $(this).attr("Catataid");
@@ -35,8 +37,10 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-          // console.log(value["nominal"]);
+          // console.log(response);
+          // console.log(value["id"])
           $("#editCashOncatat").val(value["nominal"]); // input popup
+          $("#catat_id").val(value["id"]);
         });
         $("#showpopupcatat").modal("show");
       },
@@ -49,7 +53,7 @@ $(document).ready(function () {
   $(".buttonrugi").click(function (e) {
     e.preventDefault();
     var CatatOnid = $(this).attr("RugiOnid");
-    console.log(CatatOnid);
+
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -60,8 +64,9 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-          console.log(value["nominal"]);
+          // console.log(value["id"]);
           $("#editRugiOnModal").val(value["nominal"]);// input popup
+          $("#rugi_id").val(value["id"]);// input popup
         });
         $("#tampilrugiOnModal").modal("show");
       },
@@ -82,7 +87,8 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-         
+          console.log(response);
+          $("#money_id").val(value["id"]);
           $("#editMoneyOnModal").val(value["nominal"]);// input popup
         });
         $("#tampilmoneyOnModal").modal("show");

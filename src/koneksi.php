@@ -84,12 +84,6 @@ if (isset($_POST["update_catat"])) {
      }
      header("content-type: application/json");
      echo json_encode($result_array);
-   }else{
-      echo "
-      <script>
-      alert('gaggal')
-      </script>
-      ";
    }
 
 }
@@ -108,14 +102,7 @@ if (isset($_POST["update_rugi"])) {
      }
      header("content-type: application/json");
      echo json_encode($result_array);
-   }else{
-      echo "
-      <script>
-      alert('gaggal')
-      </script>
-      ";
    }
-
 }
 
 
@@ -130,26 +117,50 @@ if (isset($_POST["update_money"])) {
      }
      header("content-type: application/json");
      echo json_encode($result_array);
-   }else{
-      echo "
-      <script>
-      alert('gaggal')
-      </script>
-      ";
    }
 
 }
 
 
 if (isset($_POST["update_cashier"])) {
-
    $inputId = $_POST["input_id"];
    $input = $_POST["inputcashier"];
-
    $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$inputId'";
-
    $query_run = mysqli_query($koneksi, $query);
-
 }
+
+
+   if (isset($_POST["update_catat"])) {
+
+      $inputIdCatat = $_POST["catat_Id"];
+      $inputCatat = $_POST["inputCatat"];
+      $query = "UPDATE JumlahTotal SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";
+      $query_run = mysqli_query($koneksi, $query);
+   }
+ 
+
+   if (isset($_POST["update_rugi"])) {
+
+      $inputIdCatat = $_POST["rugi_id"];
+      $inputCatat = $_POST["insertRugi"];
+      $query = "UPDATE mines SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";
+      $query_run = mysqli_query($koneksi, $query);
+   }
+ 
+   if (isset($_POST["update_rugi"])) {
+
+      $inputIdCatat = $_POST["rugi_id"];
+      $inputCatat = $_POST["insertRugi"];
+      $query = "UPDATE mines SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";
+      $query_run = mysqli_query($koneksi, $query);
+   }
+ 
+   if (isset($_POST["update_rugi"])) {
+
+      $inputIdCatat = $_POST["money_id"];
+      $inputCatat = $_POST["inputMoney"];
+      $query = "UPDATE Money SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";
+      $query_run = mysqli_query($koneksi, $query);
+   }
  
 ?>

@@ -27,6 +27,12 @@ $moneys = money("SELECT * FROM `Money`");
       crossorigin="anonymous"
     />
     <script src="https://cdn.tailwindcss.com"></script>
+<!-- ...or, you may also directly use a CDN :-->
+<script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
+<!-- ...or -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autonumeric/4.8.1/autoNumeric.min.js"></script>
+<!-- ...or -->
+<script src="https://unpkg.com/autonumeric"></script>
     <style>
       *{
         box-sizing: border-box;
@@ -40,31 +46,34 @@ $moneys = money("SELECT * FROM `Money`");
     </h1>
     <p class="px-2"> Selamat <?= waktu() ?> </p>
     <div class="container px-4 text-center">
+
   <?php foreach($moneyoncash as $cash) :?>
   <div class="row gx-5">
     <span class="hidden" id="CashOnid"><?= $cash["id"] ?></span>
     <div class="col">
-      <div class="p-3">Uang di kasir : Rp.&nbsp;<?= $cash["nominal"] ?> </div>
-    </div>
+  <div class="p-3">Uang di kasir: Rp.&nbsp;<?= number_format($cash["nominal"], 0, ',', '.') ?></div>
+</div>
     <div class="col mt-4">
       <button
         type="button"
         class="tampilCashOnModal btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800 "
-
         data-bs-toggle="modal"
         data-bs-target="#editCashOncashier"
         CashOnid="<?= $cash["id"] ?>"
+
       >
         Edit cepat
       </button>
     </div>
   </div>
   <?php endforeach; ?>
+
+
   <?php foreach($JumlahTotal as $Total) :?>
-  <div class="row gx-5">
+  <div class="row gx-5 ">
     <span class="hidden" id="Catataid"><?= $Total["id"] ?></span>
     <div class="col">
-      <div class="p-3">Uang tercatat: &nbsp;<?= $Total["nominal"] ?></div>
+      <div class="p-3">Uang tercatat: Rp.&nbsp;<?= number_format($Total["nominal"], 0, ',', '.') ?></div>
     </div>
     <div class="col mt-4">
       <button
@@ -79,16 +88,19 @@ $moneys = money("SELECT * FROM `Money`");
     </div>
   </div>
   <?php endforeach; ?>
+
+  
   <?php foreach($mines as $rugi) :?>
-  <div class="row gx-5">
-    <span class="hidden" id="RugiOnid"><?= $rugi["id"] ?></span>
+    <div class="row gx-5">
+    <span class="hidden" id="Catataid"><?= $rugi["id"] ?></span>
     <div class="col">
-      <div class="p-3">Uang Mines : <?= $rugi["nominal"] ?></div>
+      <div class="p-3">Uang Mines : Rp.&nbsp;<?= number_format($rugi["nominal"], 0, ',', '.') ?>
+    </div>
     </div>
     <div class="col mt-4">
     <button
     type="button"
-    class="buttonrugi btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl dark:focus:ring-blue-800"
+    class="buttonrugi  btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800"
     data-bs-toggle="modal"
     data-bs-target="#tampilrugiOnModal"
     RugiOnid="<?= $rugi["id"] ?>"
@@ -97,17 +109,19 @@ $moneys = money("SELECT * FROM `Money`");
 </button>
     </div>
   </div>
+    </div>
   <?php endforeach; ?>
+
 
     <div class=" text-center ">
     <h1 class="text-black font-extrabold text-3xl py-3">Uang di kasir saat ini</h1>
     <?php foreach($moneys as $money) :?>
   <div class="row align-items-center m-4 ">
-    <div class="col-5">
+    <div class="col-4">
      <img src="../assets/<?= $money["image"] ?>" alt="" srcset="" class="w-full">
     </div>
     <div class="col text-black font-bold text-2xl">
-      <span>0</span>
+      <span><?= $money["nominal"] ?></span>
     </div>
     <div class="col">
     <button
@@ -156,7 +170,7 @@ $moneys = money("SELECT * FROM `Money`");
             ></button>
           </div>
           <div class="modal-body font-bold text-black">
-            <form action="" method="POST">
+          <form action="" method="POST">
               <div class="mb-3">
                 <label for="tampilCashOnModal" class="form-label"
                   >Edit cepat</label
@@ -167,6 +181,7 @@ $moneys = money("SELECT * FROM `Money`");
                   class="form-control"
                   id="editCashOnModal"
                   name="inputcashier"
+                  autocomplete="off"
                 />
                 <div id="emailHelp" class="form-text">
                   fokus dan tetap semangattt
@@ -181,6 +196,10 @@ $moneys = money("SELECT * FROM `Money`");
       </div>
     </div>
     <!-- modal -->
+
+
+
+    
   <!-- modal catat -->
     <div
       class="modal fade"
@@ -201,18 +220,20 @@ $moneys = money("SELECT * FROM `Money`");
             ></button>
           </div>
           <div class="modal-body font-bold text-black">
-            <form action="koneksi.php" method="post">
+           <form action="" method="POST">
               <div class="mb-3">
-                <label for="tampilCashOncatat" class="form-label"
+                <label for="tampilCashOncatat" class="form-label hidden"
                   >Edit cepat</label
                 >
+                <input type="hidden" name="catat_Id" id="catat_id" />
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   id="editCashOncatat"
-               
+                  name="inputCatat"
+                  autocomplete="off"
                 />
-                <div id="emailHelp" class="form-text">
+                <div class="form-text text-start">
                   fokus dan tetap semangattt
                 </div>
               </div>
@@ -225,6 +246,10 @@ $moneys = money("SELECT * FROM `Money`");
       </div>
     </div>
     <!-- modal -->
+
+
+
+
   <!-- modal mines-->
   <div
       class="modal fade"
@@ -245,15 +270,18 @@ $moneys = money("SELECT * FROM `Money`");
             ></button>
           </div>
           <div class="modal-body font-bold text-black">
-            <form action="koneksi.php" method="POST">
+            <form action="" method="POST">
               <div class="mb-3">
                 <label for="tampilCashOnModal" class="form-label"
                   >Edit cepat</label
                 >
-                <input
-                  type="number"
+                <input type="hidden" name="rugi_id" id="rugi_id"/>
+                <input 
+                  type="text"
                   class="form-control"
                   id="editRugiOnModal"
+                  name="insertRugi"
+                  autocomplete="off"
                 
                 />
                 <div id="emailHelp" class="form-text">
@@ -290,15 +318,18 @@ $moneys = money("SELECT * FROM `Money`");
             ></button>
           </div>
           <div class="modal-body font-bold text-black">
-            <form action="koneksi.php" method="POST">
+            <form action="" method="POST">
               <div class="mb-3">
                 <label for="tampilCashOnModal" class="form-label"
                   >Edit cepat</label
                 >
+                <input  type="hidden" name="money_id" id="money_id"/>
                 <input
-                  type="number"
+                  type="text"
                   class="form-control"
                   id="editMoneyOnModal"
+                  name="inputMoney"
+                  autocomplete="off"
                 
                 />
                 <div id="emailHelp" class="form-text">
@@ -317,6 +348,7 @@ $moneys = money("SELECT * FROM `Money`");
     <!-- modal -->
 
 
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
@@ -324,6 +356,29 @@ $moneys = money("SELECT * FROM `Money`");
     ></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="script.js"></script>
-  
+  <script>
+    // Inisialisasi AutoNumeric pada input dengan id "editCashOnModal"
+new AutoNumeric('#editCashOnModal', {
+  currencySymbol: 'Rp ',
+  decimalCharacter: ',',
+  digitGroupSeparator: '.',
+  unformatOnSubmit: true,
+});
+
+new AutoNumeric('#editCashOncatat', {
+  currencySymbol: 'Rp ',
+  decimalCharacter: ',',
+  digitGroupSeparator: '.',
+  unformatOnSubmit: true,
+});
+
+new AutoNumeric('#editRugiOnModal', {
+  currencySymbol: 'Rp ',
+  decimalCharacter: ',',
+  digitGroupSeparator: '.',
+  unformatOnSubmit: true,
+});
+
+  </script>
   </body>
 </html>
