@@ -1,4 +1,6 @@
 <?php 
+
+
 $koneksi = mysqli_connect("localhost","root","","Cashier");
 
 function waktu() {
@@ -139,5 +141,15 @@ if (isset($_POST["update_money"])) {
 }
 
 
+if (isset($_POST["update_cashier"])) {
+
+   $inputId = $_POST["input_id"];
+   $input = $_POST["inputcashier"];
+
+   $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$inputId'";
+
+   $query_run = mysqli_query($koneksi, $query);
+
+}
  
 ?>

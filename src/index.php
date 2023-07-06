@@ -1,4 +1,6 @@
 <?php 
+
+
 require("koneksi.php");
 $JumlahTotal = JumlahTotal("SELECT * FROM `JumlahTotal`");
 $mines = mines("SELECT * FROM `mines`");
@@ -42,7 +44,7 @@ $moneys = money("SELECT * FROM `Money`");
   <div class="row gx-5">
     <span class="hidden" id="CashOnid"><?= $cash["id"] ?></span>
     <div class="col">
-      <div class="p-3">Uang di kasir : &nbsp;<?= $cash["nominal"] ?> </div>
+      <div class="p-3">Uang di kasir : Rp.&nbsp;<?= $cash["nominal"] ?> </div>
     </div>
     <div class="col mt-4">
       <button
@@ -154,16 +156,17 @@ $moneys = money("SELECT * FROM `Money`");
             ></button>
           </div>
           <div class="modal-body font-bold text-black">
-            <form action="koneksi.php" method="POST">
+            <form action="" method="POST">
               <div class="mb-3">
                 <label for="tampilCashOnModal" class="form-label"
                   >Edit cepat</label
                 >
+                <input  type="hidden" id="input_id" name="input_id"/>
                 <input
                   type="text"
                   class="form-control"
                   id="editCashOnModal"
-                
+                  name="inputcashier"
                 />
                 <div id="emailHelp" class="form-text">
                   fokus dan tetap semangattt
@@ -312,6 +315,8 @@ $moneys = money("SELECT * FROM `Money`");
     </div>
   </div>
     <!-- modal -->
+
+
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"

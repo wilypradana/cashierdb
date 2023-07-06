@@ -1,23 +1,22 @@
 $(document).ready(function () {
   $(".tampilCashOnModal").click(function (e) { // ambil dari button(bukan pop up)
     e.preventDefault();
-    var CashOnid = $("#CashOnid").text(); // ambil dari class(bukan popup)
+    var CashOnid = $(this).attr("CashOnid"); // ambil dari class(bukan popup)
     $.ajax({
       type: "POST",
       url: "koneksi.php",
       data: {
         cashId: CashOnid,
-        update_cashier: true, // submit di popup
+        update_cashier: true,
       },
       dataType: "json",
       success: function (response) {
-        // $("#tampilCashOnModal").val(response.nominal);
-
         $.each(response, function (key, value) {
-          // console.log(value["nominal"]);
-          $("#editCashOnModal").val(value["nominal"]); // input popup
+          // console.log(response);
+          $("#editCashOnModal").val(value["nominal"]); 
+          $("#input_id").val(value["id"]); 
         });
-        $("#editCashOncashier").modal("show"); // div show modal
+        $("#editCashOncashier").modal("show");
       },
     });
   });
