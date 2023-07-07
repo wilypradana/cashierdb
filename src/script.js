@@ -1,29 +1,26 @@
 $(document).ready(function () {
 
-
-  // done
   $(".tampilCashOnModal").click(function (e) {
     e.preventDefault();
-    var CashOnid = $(this).attr("CashOnid");
+    var Moneyid = $(this).attr("CashOnid");
     $.ajax({
-       type: "POST",
-       url: "koneksi.php",
-       data: {
-          cashId: CashOnid,
-          update_cashier: true,
-       },
-       dataType: "json",
-       success: function (response) {
-        console.log(response);
-          $.each(response, function (key, value) {
-             $("#editCashOnModal").val(value["nominal"]);
-             $("#input_id").val(value["id"]);
-          });
-          $("#editCashOncashier").modal("show");
-       },
+      type: "POST",
+      url: "koneksi.php",
+      data: {
+        MoneyidId: Moneyid,
+        update_money: true,
+      },
+      dataType: "json",
+      success: function (response) {
+        $.each(response, function (key, value) {
+          $("#input_id").val(value["id"]);
+          $("#editCashOnModal").val(value["nominal"]);// input popup
+        });
+        $("#editCashOncashier").modal("show");
+      },
     });
- });
- 
+  });
+
   $(".showpopupcatat").click(function (e) {
     e.preventDefault();
     var CatatOnid = $(this).attr("Catataid");
@@ -65,7 +62,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-          // console.log(value["id"]);
+          console.log(response);
           $("#editRugiOnModal").val(value["nominal"]);// input popup
           $("#rugi_id").val(value["id"]);// input popup
         });
@@ -77,7 +74,6 @@ $(document).ready(function () {
   $(".buttonuang").click(function (e) {
     e.preventDefault();
     var Moneyid = $(this).attr("moneyOnid");
-    
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -88,7 +84,6 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-          console.log(response);
           $("#money_id").val(value["id"]);
           $("#editMoneyOnModal").val(value["nominal"]);// input popup
         });

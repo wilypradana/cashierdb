@@ -17,50 +17,50 @@ function waktu() {
        return "malam";
    }
 }
-function JumlahTotal($JumlahTotal) {
-   global $koneksi;
-   $result = mysqli_query($koneksi, $JumlahTotal);
-   $rows = [];
-   while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-   }
-   return $rows;
-}
+// function JumlahTotal($JumlahTotal) {
+//    global $koneksi;
+//    $result = mysqli_query($koneksi, $JumlahTotal);
+//    $rows = [];
+//    while ($row = mysqli_fetch_assoc($result)) {
+//     $rows[] = $row;
+//    }
+//    return $rows;
+// }
 
-function mines($mines) {
-   global $koneksi;
-   $result = mysqli_query($koneksi, $mines);
-   $rows = [];
-   while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-   }
-   return $rows;
-}
-function money($money) {
-   global $koneksi;
-   $result = mysqli_query($koneksi, $money);
-   $rows = [];
-   while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-   }
-   return $rows;
-}
-function moneyoncash($moneyoncash) {
-   global $koneksi;
-   $result = mysqli_query($koneksi, $moneyoncash);
-   $rows = [];
-   while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-   }
-   return $rows;
-}
+// function mines($mines) {
+//    global $koneksi;
+//    $result = mysqli_query($koneksi, $mines);
+//    $rows = [];
+//    while ($row = mysqli_fetch_assoc($result)) {
+//     $rows[] = $row;
+//    }
+//    return $rows;
+// }
+// function money($money) {
+//    global $koneksi;
+//    $result = mysqli_query($koneksi, $money);
+//    $rows = [];
+//    while ($row = mysqli_fetch_assoc($result)) {
+//     $rows[] = $row;
+//    }
+//    return $rows;
+// }
+// function moneyoncash($moneyoncash) {
+//    global $koneksi;
+//    $result = mysqli_query($koneksi, $moneyoncash);
+//    $rows = [];
+//    while ($row = mysqli_fetch_assoc($result)) {
+//     $rows[] = $row;
+//    }
+//    return $rows;
+// }
 
 
 
 if (isset($_POST["update_cashier"])) {
-   $CashId = $_POST["cashId"];
+   $Moneyid = $_POST["input_id"];
    $result_array = [];
-   $query = "SELECT * FROM `MoneyOncash` WHERE id='$CashId'";
+   $query = "SELECT * FROM `MoneyOncash` WHERE id='$Moneyid'";
    $query_run = mysqli_query($koneksi, $query);
 
    if (mysqli_num_rows($query_run) > 0) {
@@ -74,7 +74,7 @@ if (isset($_POST["update_cashier"])) {
 }
 
 if (isset($_POST["update_catat"])) {
-   $catatid = $_POST["catatId"];
+   $catatid = $_POST["catat_Id"];
    $result_array = [];
    $query = "SELECT * FROM `JumlahTotal` WHERE id='$catatid'";
    $query_run = mysqli_query($koneksi, $query);
@@ -92,7 +92,7 @@ if (isset($_POST["update_catat"])) {
 
 
 if (isset($_POST["update_rugi"])) {
-   $rugiid = $_POST["minesId"];
+   $rugiid = $_POST["rugi_id"];
    $result_array = [];
    $query = "SELECT * FROM `mines` WHERE id='$rugiid'";
    $query_run = mysqli_query($koneksi, $query);
@@ -170,11 +170,21 @@ if (isset($_POST["update_cashier"])) {
       $username = strtolower(stripslashes($data["username"]));
       $password = mysqli_real_escape_string($koneksi, $data["password"]);
       $password2 = mysqli_real_escape_string($koneksi, $data["password2"]);
+      $cekSamauser = mysqli_query($koneksi, "SELECT username FROM User WHERE username = '$username'");
+  
+      if (mysqli_num_rows($cekSamauser) > 0) {
+          echo "
+          <script>
+          alert('Username sudah digunakan');
+          </script>
+          ";
+          return false;
+      }
   
       if ($password !== $password2) {
           echo "
           <script>
-          alert('password tidak sesuai')
+          alert('Password tidak sesuai');
           </script>
           ";
           return false;
@@ -200,25 +210,25 @@ if (isset($_POST["update_cashier"])) {
           $queryMines = "INSERT INTO mines (user_id, nominal) VALUES ($newUserId, 0)";
           mysqli_query($koneksi, $queryMines);
   
-           // Insert entri otomatis di tabel "Money" untuk setiap nominal uang
-           $images = [
-            "100rb.jpg",
-            "50rb.jpg",
-            "20rb.jpg",
-            "10rb.jpg",
-            "5rb.jpg",
-            "2rb.jpg",
-            "1rb.jpg",
-            "500perak.jpg",
-            "200perak.jpg",
-            "100perak.jpg"
-        ];
-        
-
-    foreach ($images as $image) {
-        $query = "INSERT INTO Money (user_id, image,) VALUES ($newUserId, '$images')";
-        mysqli_query($koneksi, $query);
-    }
+          // Insert entri otomatis di tabel "Money" untuk setiap nominal uang
+          $images = [
+              "100ribu.jpg",
+              "50ribu.jpeg",
+              "20ribu.jpeg",
+              "10ribu.jpeg",
+              "5ribu.jpeg",
+              "2ribu.jpeg",
+              "seribu.jpeg",
+              "500perak.jpeg",
+              "200perak.jpeg",
+              "100perak.jpeg"
+          ];
+  
+          foreach ($images as $image) {
+              $query = "INSERT INTO Money (user_id, image, nominal) VALUES ($newUserId, '$image', 0)";
+              mysqli_query($koneksi, $query);
+          }
+  
           return mysqli_affected_rows($koneksi);
       } else {
           echo "Terjadi kesalahan saat mendaftarkan pengguna: " . mysqli_error($koneksi);
@@ -226,6 +236,51 @@ if (isset($_POST["update_cashier"])) {
       }
   }
   
+  function moneyoncash($query, $user_id) {
+   global $koneksi;
+   $statement = mysqli_prepare($koneksi, $query);
+   mysqli_stmt_bind_param($statement, 'i', $user_id);
+   mysqli_stmt_execute($statement);
+   $result = mysqli_stmt_get_result($statement);
+   $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   mysqli_stmt_close($statement);
+  return $data;
+
+}
+  function JumlahTotal($query, $user_id) {
+   global $koneksi;
+   $statement = mysqli_prepare($koneksi, $query);
+   mysqli_stmt_bind_param($statement, 'i', $user_id);
+   mysqli_stmt_execute($statement);
+   $result = mysqli_stmt_get_result($statement);
+   $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   mysqli_stmt_close($statement);
+   return $data;
+
+}
+  function mines($query, $user_id) {
+   global $koneksi;
+   $statement = mysqli_prepare($koneksi, $query);
+   mysqli_stmt_bind_param($statement, 'i', $user_id);
+   mysqli_stmt_execute($statement);
+   $result = mysqli_stmt_get_result($statement);
+   $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   mysqli_stmt_close($statement);
+   return $data;
+
+}
+  function money($query, $user_id) {
+   global $koneksi;
+   $statement = mysqli_prepare($koneksi, $query);
+   mysqli_stmt_bind_param($statement, 'i', $user_id);
+   mysqli_stmt_execute($statement);
+   $result = mysqli_stmt_get_result($statement);
+   $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+   mysqli_stmt_close($statement);
+   return $data;
+
+}
+
 
 
 ?>
