@@ -14,6 +14,7 @@ $(document).ready(function () {
        },
        dataType: "json",
        success: function (response) {
+        console.log(response);
           $.each(response, function (key, value) {
              $("#editCashOnModal").val(value["nominal"]);
              $("#input_id").val(value["id"]);

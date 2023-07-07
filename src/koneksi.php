@@ -163,4 +163,69 @@ if (isset($_POST["update_cashier"])) {
       $query_run = mysqli_query($koneksi, $query);
    }
  
+   function register($data) {
+      global $koneksi;
+  
+      $email = $data["email"];
+      $username = strtolower(stripslashes($data["username"]));
+      $password = mysqli_real_escape_string($koneksi, $data["password"]);
+      $password2 = mysqli_real_escape_string($koneksi, $data["password2"]);
+  
+      if ($password !== $password2) {
+          echo "
+          <script>
+          alert('password tidak sesuai')
+          </script>
+          ";
+          return false;
+      }
+  
+      // Enkripsi password
+      $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+  
+      $query = "INSERT INTO User (email, username, password) VALUES ('$email', '$username', '$hashedPassword')";
+      $result = mysqli_query($koneksi, $query);
+  
+      if ($result) {
+          // Menangkap nilai user_id yang baru ditambahkan
+          $newUserId = mysqli_insert_id($koneksi);
+  
+          // Melakukan operasi penambahan entri baru di tabel-tabel lain dengan nilai nominal 0
+          $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal) VALUES ($newUserId, 0)";
+          mysqli_query($koneksi, $queryMoneyOncash);
+  
+          $queryJumlahTotal = "INSERT INTO JumlahTotal (user_id, nominal) VALUES ($newUserId, 0)";
+          mysqli_query($koneksi, $queryJumlahTotal);
+  
+          $queryMines = "INSERT INTO mines (user_id, nominal) VALUES ($newUserId, 0)";
+          mysqli_query($koneksi, $queryMines);
+  
+           // Insert entri otomatis di tabel "Money" untuk setiap nominal uang
+           $images = [
+            "100rb.jpg",
+            "50rb.jpg",
+            "20rb.jpg",
+            "10rb.jpg",
+            "5rb.jpg",
+            "2rb.jpg",
+            "1rb.jpg",
+            "500perak.jpg",
+            "200perak.jpg",
+            "100perak.jpg"
+        ];
+        
+
+    foreach ($images as $image) {
+        $query = "INSERT INTO Money (user_id, image,) VALUES ($newUserId, '$images')";
+        mysqli_query($koneksi, $query);
+    }
+          return mysqli_affected_rows($koneksi);
+      } else {
+          echo "Terjadi kesalahan saat mendaftarkan pengguna: " . mysqli_error($koneksi);
+          return false;
+      }
+  }
+  
+
+
 ?>
