@@ -1,7 +1,5 @@
 <?php 
 
-
-error_reporting(E_ALL);
 require("koneksi.php");
 
 session_start();
@@ -33,7 +31,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
     <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title>Bootstrap demo</title>
+      <title> Not ToDo but We Do</title>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -41,6 +39,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
         crossorigin="anonymous"
       />
       <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="shortcut icon" href="../assets/favicon.jpg" type="image/x-icon">
   <!-- ...or, you may also directly use a CDN :-->
   <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
   <!-- ...or -->

@@ -13,6 +13,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
+          console.log(response);
           $("#input_id").val(value["id"]);
           $("#editCashOnModal").val(value["nominal"]);// input popup
         });
@@ -84,6 +85,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
+        
           $("#money_id").val(value["id"]);
           $("#editMoneyOnModal").val(value["nominal"]);// input popup
         });

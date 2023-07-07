@@ -201,7 +201,7 @@ if (isset($_POST["update_cashier"])) {
           $newUserId = mysqli_insert_id($koneksi);
   
           // Melakukan operasi penambahan entri baru di tabel-tabel lain dengan nilai nominal 0
-          $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal) VALUES ($newUserId, 0)";
+          $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal, task) VALUES ($newUserId, 0, '')";
           mysqli_query($koneksi, $queryMoneyOncash);
   
           $queryJumlahTotal = "INSERT INTO JumlahTotal (user_id, nominal) VALUES ($newUserId, 0)";
@@ -256,6 +256,7 @@ if (isset($_POST["update_cashier"])) {
    $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
    mysqli_stmt_close($statement);
    return $data;
+   // var_dump($data);
 
 }
   function mines($query, $user_id) {
