@@ -1,17 +1,30 @@
 <?php 
-require("koneksi.php");
-error_reporting(E_ALL);  ini_set('display_errors', '1');
+error_reporting(E_ALL);
+require("../php/koneksi.php");
 
-if (isset($_POST["register"])) {
-   if ( register($_POST) > 0 ) {
-      echo"
-      <script>
-      alert('berhasil login')
-      </script>
-      ";
-   }else{
-    echo mysqli_error($koneksi);
-   }
+ini_set('display_errors', '1');
+
+if (isset($_POST["login"])) {
+    $username = mysqli_real_escape_string($koneksi, $_POST["username"]);
+    $password = mysqli_real_escape_string($koneksi, $_POST["password"]);
+
+    $query = "SELECT * FROM User WHERE username = '$username'";
+    $result = mysqli_query($koneksi, $query);
+
+    if (mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row["password"])) {
+            session_start();
+            $_SESSION["username"] = $row["username"];
+            $_SESSION["user_id"] = $row["user_id"];
+
+            // Penguncian (locking) session
+            session_regenerate_id(true);
+
+            header("Location: ../main/");
+            exit;
+        }
+    }
 }
 
 
@@ -26,7 +39,7 @@ if (isset($_POST["register"])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Login</title>
     <link rel="shortcut icon" href="../assets/favicon.jpg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -40,7 +53,7 @@ if (isset($_POST["register"])) {
 .register-photo .image-holder {
   display:table-cell;
   width:auto;
-  background:url(../assets/sayhello.jpeg);
+  background:url(../../assets/sayhello.jpeg);
   background-size:cover;
 }
 
@@ -128,15 +141,13 @@ if (isset($_POST["register"])) {
                 <span class="absolute bottom-0"><a href="https://www.freepik.com/premium-vector/portrait-smiling-young-man-saying-hello-waving-with-hand-hi-bye-gesture-happy-guy-greeting-welcoming-smb-colored-flat-vector-illustration-isolated-white-background_29732441.htm#query=say%20hello&position=43&from_view=search&track=ais">Source image</a></span>
             </div>
             <form method="post" action="">
-                <h2 class="text-center"><strong>Create</strong> an account.</h2>
-                <div class="form-group"><input class="form-control" id="email" type="email" name="email" placeholder="Email" autocomplete="off"></div>
+                <h2 class="text-center"><strong>Login</strong>  account</h2>
                 <div class="form-group"><input class="form-control" id="username" type="username" name="username" placeholder="username" autocomplete="off"></div>
                 <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" required></div>
-                <div class="form-group"><input class="form-control" type="password" name="password2" placeholder="Password (repeat)" required></div>
                 <div class="form-group">
-                    <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox" required>I agree to the <a href="" class="text-blue-500">license terms.</a></label></div>
+                    <div class="form-check"><label class="form-check-label"><input class="form-check-input" type="checkbox">Rememmber me</label></div>
                 </div>
-                <div class="form-group already"><button class="btn btn-primary btn-block" type="submit" name="register">Sign Up</button></div> <span class="text-sm">You already have an account?</span> <a href="login.php"class="text-sm hover:text-blue-400">Login here.</a></form>
+                <div class="form-group already"><button class="btn btn-primary btn-block" type="submit" name="login">Sign In</button></div> <span class="text-sm">Dont have a account?</span> <a href="../register/"class="text-sm hover:text-blue-400">Sign Up here.</a></form>
         </div>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
