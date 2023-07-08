@@ -6,7 +6,7 @@ $(document).ready(function () {
   $(".showpopupcatat").click(function (e) {
     e.preventDefault();
     var CatatOnid = $(this).attr("Catataid");
-    // console.log(CatatOnid);
+
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -19,7 +19,7 @@ $(document).ready(function () {
         $.each(response, function (key, value) {
           // console.log(response);
           // console.log(value["id"])
-          $("#editCashOncatat").val(value["nominal"]); // input popup
+          $("#editCashOncatat").val( "Rp." +  value["nominal"]); // input popup
           $("#catat_id").val(value["id"]);
         });
         $("#showpopupcatat").modal("show");
@@ -28,7 +28,7 @@ $(document).ready(function () {
   });
 
 
-
+// done
  
   $(".buttonrugi").click(function (e) {
     e.preventDefault();
@@ -45,7 +45,7 @@ $(document).ready(function () {
       success: function (response) {
         $.each(response, function (key, value) {
           console.log(response);
-          $("#editRugiOnModal").val(value["nominal"]);// input popup
+          $("#editRugiOnModal").val("Rp." + value["nominal"]);// input popup
           $("#rugi_id").val(value["id"]);// input popup
         });
         $("#tampilrugiOnModal").modal("show");
@@ -64,7 +64,7 @@ $(document).ready(function () {
 
 
 
-
+// done
   $(".buttonuang").click(function (e) {
     e.preventDefault();
     var Moneyid = $(this).attr("moneyOnid");
@@ -81,14 +81,14 @@ $(document).ready(function () {
         $.each(response, function (key, value) {
           console.log(response)
           $("#money_id").val(value["id"]);
-          $("#editMoneyOnModal").val(value["nominal"]);// input popup
+          $("#editMoneyOnModal").val( value["nominal"]);// input popup
         });
         $("#tampilmoneyOnModal").modal("show");
       },
     });
   });
 
-  
+  // done
   $(".tampilCashOnModal").click(function (e) {
     e.preventDefault();
     var cashOnid = $(this).attr("cashOnid");
@@ -105,7 +105,7 @@ $(document).ready(function () {
         $.each(response, function (key, value) {
           console.log(response)
           $("#input_id").val(value["id"]);
-          $("#editCashOnModal").val(value["nominal"]);// input popup
+          $("#editCashOnModal").val( "Rp." +value["nominal"]);// input popup
         });
         $("#editCashOncashier").modal("show");
       },

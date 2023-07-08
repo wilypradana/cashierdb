@@ -57,7 +57,7 @@ function waktu() {
 
 
 
-
+// query cashier
 
 
 if (isset($_POST["update_cashier"])) {
@@ -77,11 +77,11 @@ if (isset($_POST["update_cashier"])) {
 
 
 
-
+// query rugi
 if (isset($_POST["update_rugi"])) {
-   $rugiid = $_POST["rugi_id"];
+   $cashid = $_POST["minesId"];
    $result_array = [];
-   $query = "SELECT * FROM `mines` WHERE id='$rugiid'";
+   $query = "SELECT * FROM `mines` WHERE id='$cashid'";
    $query_run = mysqli_query($koneksi, $query);
    if (mysqli_num_rows($query_run) > 0) {
      foreach ($query_run as $row) {
@@ -92,6 +92,26 @@ if (isset($_POST["update_rugi"])) {
    }
 }
 
+// query catat
+if (isset($_POST["update_catat"])) {
+   $cashid = $_POST["catatId"];
+   $result_array = [];
+   $query = "SELECT * FROM `JumlahTotal` WHERE id='$cashid'";
+   $query_run = mysqli_query($koneksi, $query);
+   if (mysqli_num_rows($query_run) > 0) {
+     foreach ($query_run as $row) {
+       array_push($result_array, $row);
+     }
+     header("content-type: application/json");
+     echo json_encode($result_array);
+   }
+}
+
+
+
+
+
+// query money
 
 if (isset($_POST["update_money"])) {
    $moneyId = $_POST["MoneyidId"];
@@ -110,9 +130,9 @@ if (isset($_POST["update_money"])) {
 
 
 if (isset($_POST["update_cashier"])) {
-   $inputId = $_POST["input_id"];
+   $cashOnid = $_POST["input_id"];
    $input = $_POST["inputcashier"];
-   $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$inputId'";
+   $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$cashOnid'";
    $query_run = mysqli_query($koneksi, $query);
 }
 
@@ -126,13 +146,6 @@ if (isset($_POST["update_cashier"])) {
    }
  
 
-   if (isset($_POST["update_rugi"])) {
-
-      $inputIdCatat = $_POST["rugi_id"];
-      $inputCatat = $_POST["insertRugi"];
-      $query = "UPDATE mines SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";
-      $query_run = mysqli_query($koneksi, $query);
-   }
  
    if (isset($_POST["update_rugi"])) {
 
@@ -142,8 +155,8 @@ if (isset($_POST["update_cashier"])) {
       $query_run = mysqli_query($koneksi, $query);
    }
  
-   if (isset($_POST["update_rugi"])) {
 
+   if (isset($_POST["update_money"])) {
       $inputIdCatat = $_POST["money_id"];
       $inputCatat = $_POST["inputMoney"];
       $query = "UPDATE Money SET  nominal='$inputCatat' WHERE id='$inputIdCatat'";

@@ -98,6 +98,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
           class="showpopupcatat btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800"
           data-bs-toggle="modal"
           data-bs-target="#showpopupcatat"
+          Catataid = <?= $Total["id"] ?>
           >
           Edit cepat
         </button>
@@ -108,7 +109,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
     
     <?php foreach($mines as $rugi) :?>
       <div class="row gx-5">
-      <span class="hidden" id="Catataid"><?= $rugi["id"] ?></span>
+      <span class="hidden" id="RugiOnid"><?= $rugi["id"] ?></span>
       <div class="col">
         <div class="p-3">Uang Mines : Rp.&nbsp;<?= number_format($rugi["nominal"], 0, ',', '.') ?>
       </div>
@@ -127,6 +128,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
     </div>
       </div>
     <?php endforeach; ?>
+    
       <div class=" text-center ">
       <h1 class="text-black font-extrabold text-3xl py-3">Uang di kasir saat ini</h1>
       <?php foreach($moneys as $money) :?>
@@ -333,7 +335,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
                     fokus dan tetap semangattt
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary bg-red-600" name="update_rugi">
+                <button type="submit" class="btn btn-primary bg-red-600" name="update_money">
                   Submit
                 </button>
               </form>
