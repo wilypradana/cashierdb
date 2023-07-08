@@ -1,6 +1,6 @@
 <?php 
 error_reporting(E_ALL);
-require("../php/koneksi.php");
+require("../koneksi.php");
 
 ini_set('display_errors', '1');
 
@@ -21,7 +21,7 @@ if (isset($_POST["login"])) {
             // Penguncian (locking) session
             session_regenerate_id(true);
 
-            header("Location: ../main/");
+            header("Location: ../index.php");
             exit;
         }
     }

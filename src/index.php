@@ -1,6 +1,5 @@
 <?php 
 
-error_reporting(E_ALL);  ini_set('display_errors', '1');
 
 require("koneksi.php");
 
@@ -8,7 +7,7 @@ session_start();
 
 // Periksa apakah pengguna sudah login
 if (!isset($_SESSION["user_id"])) {
-    header("Location: login.php");
+    header("Location: login/");
     exit;
 }
 
@@ -134,7 +133,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
       <?php foreach($moneys as $money) :?>
     <div class="row align-items-center m-4 ">
       <div class="col-4">
-      <img src="../../assets/<?= $money["image"] ?>" alt="money" srcset="" class="w-full">
+      <img src="../assets/<?= $money["image"] ?>" alt="money" srcset="" class="w-full">
       </div>
       <div class="col text-black font-bold text-2xl">
         <span><?= $money["nominal"] ?></span>
@@ -355,7 +354,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
       ></script>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-      <script src="../js/app.js"></script>
+      <script src="app.js"></script>
     <script>
       // Inisialisasi AutoNumeric pada input dengan id "editCashOnModal"
   new AutoNumeric('#editCashOnModal', {

@@ -1,7 +1,7 @@
 <?php 
 error_reporting(E_ALL);  ini_set('display_errors', '1');
 
-require("../php/koneksi.php");
+require("../koneksi.php");
 
 if (isset($_POST["register"])) {
    if ( register($_POST) > 0 ) {

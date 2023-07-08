@@ -130,8 +130,8 @@ if (isset($_POST["update_money"])) {
 
 
 if (isset($_POST["update_cashier"])) {
-   $cashOnid = $_POST["input_id"];
-   $input = $_POST["inputcashier"];
+   $cashOnid = $_POST["money_id"];
+   $input = $_POST["editCashOnModal"];
    $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$cashOnid'";
    $query_run = mysqli_query($koneksi, $query);
 }
