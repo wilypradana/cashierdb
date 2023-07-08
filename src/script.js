@@ -1,26 +1,7 @@
 $(document).ready(function () {
 
-  $(".tampilCashOnModal").click(function (e) {
-    e.preventDefault();
-    var Moneyid = $(this).attr("CashOnid");
-    $.ajax({
-      type: "POST",
-      url: "koneksi.php",
-      data: {
-        MoneyidId: Moneyid,
-        update_money: true,
-      },
-      dataType: "json",
-      success: function (response) {
-        $.each(response, function (key, value) {
-          console.log(response);
-          $("#input_id").val(value["id"]);
-          $("#editCashOnModal").val(value["nominal"]);// input popup
-        });
-        $("#editCashOncashier").modal("show");
-      },
-    });
-  });
+  
+
 
   $(".showpopupcatat").click(function (e) {
     e.preventDefault();
@@ -52,7 +33,7 @@ $(document).ready(function () {
   $(".buttonrugi").click(function (e) {
     e.preventDefault();
     var CatatOnid = $(this).attr("RugiOnid");
-
+    console.log(CatatOnid)
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -72,9 +53,22 @@ $(document).ready(function () {
     });
   });
  
+
+
+
+
+
+
+
+
+
+
+
+
   $(".buttonuang").click(function (e) {
     e.preventDefault();
     var Moneyid = $(this).attr("moneyOnid");
+    console.log(Moneyid)
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -85,7 +79,7 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-        
+          console.log(response)
           $("#money_id").val(value["id"]);
           $("#editMoneyOnModal").val(value["nominal"]);// input popup
         });
@@ -93,6 +87,32 @@ $(document).ready(function () {
       },
     });
   });
+
+  
+  $(".tampilCashOnModal").click(function (e) {
+    e.preventDefault();
+    var cashOnid = $(this).attr("cashOnid");
+    console.log(cashOnid);
+    $.ajax({
+      type: "POST",
+      url: "koneksi.php",
+      data: {
+        cashOnid: cashOnid,
+        update_cashier: true,
+      },
+      dataType: "json",
+      success: function (response) {
+        $.each(response, function (key, value) {
+          console.log(response)
+          $("#input_id").val(value["id"]);
+          $("#editCashOnModal").val(value["nominal"]);// input popup
+        });
+        $("#editCashOncashier").modal("show");
+      },
+    });
+});
+
+  
 
 
 

@@ -57,26 +57,13 @@ function waktu() {
 
 
 
+
+
+
 if (isset($_POST["update_cashier"])) {
-   $Moneyid = $_POST["input_id"];
+   $cashid = $_POST["cashOnid"];
    $result_array = [];
-   $query = "SELECT * FROM `MoneyOncash` WHERE id='$Moneyid'";
-   $query_run = mysqli_query($koneksi, $query);
-
-   if (mysqli_num_rows($query_run) > 0) {
-      foreach ( $query_run as $row) {
-         array_push($result_array, $row);
-         header("content-type: application/json");
-         echo json_encode($result_array);
-
-      }
-   }
-}
-
-if (isset($_POST["update_catat"])) {
-   $catatid = $_POST["catat_Id"];
-   $result_array = [];
-   $query = "SELECT * FROM `JumlahTotal` WHERE id='$catatid'";
+   $query = "SELECT * FROM `MoneyOncash` WHERE id='$cashid'";
    $query_run = mysqli_query($koneksi, $query);
    if (mysqli_num_rows($query_run) > 0) {
      foreach ($query_run as $row) {
@@ -85,8 +72,8 @@ if (isset($_POST["update_catat"])) {
      header("content-type: application/json");
      echo json_encode($result_array);
    }
-
 }
+
 
 
 
@@ -201,7 +188,7 @@ if (isset($_POST["update_cashier"])) {
           $newUserId = mysqli_insert_id($koneksi);
   
           // Melakukan operasi penambahan entri baru di tabel-tabel lain dengan nilai nominal 0
-          $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal, task) VALUES ($newUserId, 0, '')";
+          $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal, task) VALUES ($newUserId, 0, 'Uang dikasir saat ini')";
           mysqli_query($koneksi, $queryMoneyOncash);
   
           $queryJumlahTotal = "INSERT INTO JumlahTotal (user_id, nominal) VALUES ($newUserId, 0)";

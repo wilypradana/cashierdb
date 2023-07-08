@@ -1,5 +1,7 @@
 <?php 
 
+
+error_reporting(E_ALL);
 require("koneksi.php");
 
 session_start();
@@ -31,7 +33,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
     <head>
       <meta charset="utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1" />
-      <title> Not ToDo but We Do</title>
+      <title>Bootstrap demo</title>
       <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
         rel="stylesheet"
@@ -39,7 +41,6 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
         crossorigin="anonymous"
       />
       <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="shortcut icon" href="../assets/favicon.jpg" type="image/x-icon">
   <!-- ...or, you may also directly use a CDN :-->
   <script src="https://cdn.jsdelivr.net/npm/autonumeric@4.8.1"></script>
   <!-- ...or -->
@@ -59,28 +60,30 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
       </h1>
       <p class="px-2"> Selamat <?= waktu() ?>, <?= $username ?>  </p>
       <div class="container px-4 text-center">
-      <?php if (!empty($moneyoncash)): ?>
+
       <?php foreach($moneyoncash as $cash) : ?>
     <div class="row gx-5">
-      <span class="hidden" id="CashOnid"><?= $cash["id"] ?></span>
-      <div class="col">
-    <div class="p-3"><?=$cash["task"] ?>: Rp.&nbsp;<?= number_format($cash["nominal"], 0, ',', '.') ?></div>
-  </div>
-      <div class="col mt-4">
-        <button
-          type="button"
-          class="tampilCashOnModal btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800 "
-          data-bs-toggle="modal"
-          data-bs-target="#editCashOncashier"
-          CashOnid="<?= $cash["id"] ?>"
-
-        >
-          Edit cepat
-        </button>
-      </div>
+        <span class="hidden cashOnid"><?= $cash["id"] ?></span>
+        <div class="col">
+            <div class="p-3">
+                <?= $cash["task"] ?>: Rp.&nbsp;<?= number_format($cash["nominal"], 0, ',', '.') ?>
+            </div>
+        </div>
+        <div class="col mt-4">
+            <button
+                type="button"
+                class="tampilCashOnModal btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800 "
+                data-bs-toggle="modal"
+                data-bs-target="#editCashOncashier"
+                cashOnid="<?= $cash["id"] ?>"
+            >
+                Edit cepat
+            </button>
+        </div>
     </div>
-    <?php endforeach; ?>
-  <?php endif; ?>
+<?php endforeach; ?>
+
+ 
 
 
     <?php foreach($JumlahTotal as $Total) :?>
@@ -95,8 +98,7 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
           class="showpopupcatat btn btn-primary bg-gradient-to-br text-black from-purple-600 to-blue-500 hover:bg-gradient-to-bl  dark:focus:ring-blue-800"
           data-bs-toggle="modal"
           data-bs-target="#showpopupcatat"
-          Catataid="<?= $Total["id"] ?>"
-        >
+          >
           Edit cepat
         </button>
       </div>
@@ -164,27 +166,33 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
 
     <!-- modal oncash-->
     <div class="modal fade" id="editCashOncashier" tabindex="-1" aria-labelledby="editCashOncashierLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="editCashOncashierLabel">Edit cepat</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body font-bold text-black">
-        <form action="" method="POST">
-          <div class="mb-3">
-            <label for="editCashOnModal" class="form-label">Edit cepat</label>
-            <input type="hidden" id="input_id" name="input_id" />
-            <input type="text" class="form-control" id="editCashOnModal" name="inputcashier" autocomplete="off" />
-            <div id="emailHelp" class="form-text">fokus dan tetap semangattt</div>
-          </div>
-          <button type="submit" class="btn btn-primary bg-red-600" name="update_cashier">Submit</button>
-        </form>
-      </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editCashOncashierLabel">Edit cepat</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body font-bold text-black">
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label for="editCashOnModal" class="form-label">Edit cepat</label>
+                        <input  type="hidden" name="money_id" id="input_id"/>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="editCashOnModal"
+                    name="editCashOnModal"
+                    autocomplete="off"
+                  
+                  />
+                        <div id="emailHelp" class="form-text">fokus dan tetap semangattt</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary bg-red-600" name="update_cashier">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
-
 
 
 
