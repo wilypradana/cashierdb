@@ -21,10 +21,11 @@ if (isset($_POST["login"])) {
             // Penguncian (locking) session
             session_regenerate_id(true);
 
-            header("Location: ../index.php");
+            header("Location: ../");
             exit;
         }
     }
+    $error = true;
 }
 
 
@@ -138,10 +139,15 @@ if (isset($_POST["login"])) {
     <div class="register-photo">
         <div class="form-container">
             <div class="image-holder relative">
-                <span class="absolute bottom-0"><a href="https://www.freepik.com/premium-vector/portrait-smiling-young-man-saying-hello-waving-with-hand-hi-bye-gesture-happy-guy-greeting-welcoming-smb-colored-flat-vector-illustration-isolated-white-background_29732441.htm#query=say%20hello&position=43&from_view=search&track=ais">Source image</a></span>
+                <span class="md:absolute  hidden bottom-0 images "><a href="https://www.freepik.com/premium-vector/portrait-smiling-young-man-saying-hello-waving-with-hand-hi-bye-gesture-happy-guy-greeting-welcoming-smb-colored-flat-vector-illustration-isolated-white-background_29732441.htm#query=say%20hello&position=43&from_view=search&track=ais">Source image</a></span>
             </div>
             <form method="post" action="">
                 <h2 class="text-center"><strong>Login</strong>  account</h2>
+                <?php if(isset($error)) : ?>
+                <div class="alert alert-danger" role="alert">
+                 Password / username salah
+                 </div>
+                 <?php endif; ?>
                 <div class="form-group"><input class="form-control" id="username" type="username" name="username" placeholder="username" autocomplete="off"></div>
                 <div class="form-group"><input class="form-control" type="password" name="password" placeholder="Password" required></div>
                 <div class="form-group">
