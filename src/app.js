@@ -92,6 +92,8 @@ $(document).ready(function () {
   $(".tampilCashOnModal").click(function (e) {
     e.preventDefault();
     var cashOnid = $(this).attr("cashOnid");
+  
+
     $.ajax({
       type: "POST",
       url: "koneksi.php",
@@ -102,9 +104,9 @@ $(document).ready(function () {
       dataType: "json",
       success: function (response) {
         $.each(response, function (key, value) {
-          console.log(response)
           $("#input_id").val(value["id"]);
-          $("#editCashOnModal").val( "Rp." +value["nominal"]);// input popup
+          $("#editCashOnModal").val(parseInt(value["nominal"])); // Mengubah menjadi integer
+          $("#editTaskOnModal").val( value["task"]);// input popup
         });
         $("#editCashOncashier").modal("show");
       },

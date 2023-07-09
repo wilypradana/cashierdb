@@ -132,10 +132,10 @@ if (isset($_POST["update_money"])) {
 if (isset($_POST["update_cashier"])) {
    $cashOnid = $_POST["money_id"];
    $input = $_POST["editCashOnModal"];
-   $query = "UPDATE MoneyOncash SET nominal='$input' WHERE id='$cashOnid'";
+$inputTask =  $_POST["editTaskOnModal"];
+$query = "UPDATE MoneyOncash SET nominal='$input', task='$inputTask' WHERE id='$cashOnid'";
    $query_run = mysqli_query($koneksi, $query);
 }
-
 
    if (isset($_POST["update_catat"])) {
 
@@ -204,10 +204,10 @@ if (isset($_POST["update_cashier"])) {
           $queryMoneyOncash = "INSERT INTO MoneyOncash (user_id, nominal, task) VALUES ($newUserId, 0, 'Uang dikasir saat ini')";
           mysqli_query($koneksi, $queryMoneyOncash);
   
-          $queryJumlahTotal = "INSERT INTO JumlahTotal (user_id, nominal) VALUES ($newUserId, 0)";
+          $queryJumlahTotal = "INSERT INTO JumlahTotal (user_id, nominal, task) VALUES ($newUserId, 0, 'uang tercatat')";
           mysqli_query($koneksi, $queryJumlahTotal);
   
-          $queryMines = "INSERT INTO mines (user_id, nominal) VALUES ($newUserId, 0)";
+          $queryMines = "INSERT INTO mines (user_id, nominal, task) VALUES ($newUserId, 0, 'uang mines')";
           mysqli_query($koneksi, $queryMines);
   
           // Insert entri otomatis di tabel "Money" untuk setiap nominal uang

@@ -213,13 +213,22 @@ $moneys = money("SELECT * FROM `Money` WHERE user_id = ?", $user_id);
                         <label for="editCashOnModal" class="form-label">Edit cepat</label>
                         <input  type="hidden" name="money_id" id="input_id"/>
                   <input
-                    type="text"
+                    type="number"
                     class="form-control"
                     id="editCashOnModal"
                     name="editCashOnModal"
                     autocomplete="off"
                   
                   />
+                  <input
+                    type="text"
+                    class="form-control mt-4"
+                    id="editTaskOnModal"
+                    name="editTaskOnModal"
+                    autocomplete="off"
+                  
+                  />
+                  <span>Ubah ini jika perlu</span>
                         <div id="emailHelp" class="form-text">fokus dan tetap semangattt</div>
                     </div>
                     <button type="submit" class="btn btn-primary bg-red-600" name="update_cashier">Submit</button>
